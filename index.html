@@ -2,11 +2,27 @@
   <body>
     <input type="text" id="product" />
     <input type="button" id="submit" value="Submit" />
+    <br /><br />
+    <input type="button" id="finish" value="Finish" />
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript">
       $("#submit").click(function(){
         var product = $("#product").val();
         $.post('/list/add/'+product);
+        $("#product").val('').focus();
+      });
+
+      $('#product').keypress(function (e) {
+       var key = e.which;
+       if(key == 13)  // the enter key code
+        {
+          $('#submit').click();
+          return false;
+        }
+      });
+
+      $("#finish").click(function(){
+        $.post('/finish');
       });
     </script>
   </body>

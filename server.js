@@ -25,8 +25,9 @@ server.post('/list/add/:product', function (req, res, next){
   res.end()
 });
 
-server.post('/finish/', function (req, res, next){
+server.post('/finish', function (req, res, next){
   list = [];
+  console.log('list is finished');
 });
 
 server.listen(port, function () {
