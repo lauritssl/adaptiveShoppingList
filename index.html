@@ -1,7 +1,13 @@
 <html>
- <body>
-   <form method="post" action="http://localhost:8080/list/add/kartofler">
-     <input type="submit" value="Submit" />
-   </form>
- </body>
+  <body>
+    <input type="text" id="product" />
+    <input type="button" id="submit" value="Submit" />
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js" />
+    <script type="text/javascript">
+      $("#submit").click{
+        var product = $("#product").val();
+        $.post('/list/add/'+product);
+      }
+    </script>
+  </body>
 </html>
