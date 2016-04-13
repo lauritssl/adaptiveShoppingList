@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <input type="button" id="submit" value="Submit" />
+    <br /><br />
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+      $("#submit").click(function(){
+        $.get('/recipes/sads', function(data){
+          console.log(data);
+        });
+      });
+    </script>
+  </body>
+</html>
