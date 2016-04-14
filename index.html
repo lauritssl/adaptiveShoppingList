@@ -1,29 +1,250 @@
 <html>
+  <head>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="no">
+    <meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="mdl/material.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="mdl/material.min.js"></script>
+  </head>
   <body>
-    <input type="text" id="product" />
-    <input type="button" id="submit" value="Submit" />
-    <br /><br />
-    <input type="button" id="finish" value="Finish" />
+
+    <div class="mdl-grid" style="margin: 0; padding:0;">
+      <div class="mdl-cell mdl-cell--6-col cell-scroller">
+
+        <h2>Indkøbsliste</h2>
+        <ul class="demo-list-one mdl-list shopping-list">
+          <li class="mdl-list__item mdl-list__item--one-line">
+            <span class="mdl-list__item-primary-content shopping-list-item">
+              <span>Kalkun fillet</span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+            </span>
+          </li>
+          <li class="mdl-list__item mdl-list__item--one-line">
+            <span class="mdl-list__item-primary-content shopping-list-item">
+              <span>Bacon</span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+            </span>
+          </li>
+          <li class="mdl-list__item mdl-list__item--one-line">
+            <span class="mdl-list__item-primary-content shopping-list-item">
+              <span>Majs</span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+            </span>
+          </li>
+          <li class="mdl-list__item mdl-list__item--one-line">
+            <span class="mdl-list__item-primary-content shopping-list-item done">
+              <span>Hakkede Tomater</span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">done</i></a>
+            </span>
+          </li>
+          <li class="mdl-list__item mdl-list__item--one-line">
+            <span class="mdl-list__item-primary-content shopping-list-item done">
+              <span>Tomatpurre</span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+              <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">done</i></a>
+            </span>
+          </li>
+        </ul>
+
+      </div>
+      <div class="mdl-cell mdl-cell--6-col cell-scroller">
+
+
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title" style="background: url('images/0001.jpg') center / cover;">
+            <h2 class="mdl-card__title-text">Marineret kalkun</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Pisk saften og revet skal af appelsinen sammen med sojasauce, solsikkeolie, knust hvidløg, friskreven ingefær og honning. Husk nu at appelsinen skal være usprøjtet.
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Tilføj ret til indkøbsliste
+            </a>
+          </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">cloud</i>
+            </button>
+          </div>
+        </div>
+
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp" id="570e20f91b23d27af8934bc7">
+          <div class="mdl-card__title" style="background: url('images/0002.jpg') center / cover;">
+            <h2 class="mdl-card__title-text">Kalkunpizza med tomatsauce</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Gæren udrøres i det lunkne vand. De øvrige ingredienser tilsættes, og dejen æltes godt igennem. Stilles til hævning et lunt sted ca. 1 time.
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect add-recipie-btn">
+              Tilføj ret til indkøbsliste
+            </a>
+          </div>
+          <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <i class="material-icons">cloud</i>
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript">
-      $("#submit").click(function(){
-        var product = $("#product").val();
-        $.post('/list/add/'+product);
-        $("#product").val('').focus();
-      });
+      var snackbarContainer = document.querySelector('#demo-toast-example');
 
-      $('#product').keypress(function (e) {
-       var key = e.which;
-       if(key == 13)  // the enter key code
-        {
-          $('#submit').click();
-          return false;
+      var shoppingList = [{name: 'Kalkun fillet', checked: false}, {name: 'Bacon', checked: true}, {name: 'Hakkede Tomater', checked: true}];
+
+      redrawList();
+
+      var recipies = [{
+    "_id" : ObjectId("570e20f91b23d27af8934bc7"),
+    "name" : "brændende kærlighed",
+    "description" : "",
+    "image" : "/assets/burninglove.jpg",
+    "ingredients" : [
+        {
+            "name" : "bacon",
+            "amount" : 150,
+            "unit" : "gram"
+        },
+        {
+            "name" : "løg",
+            "amount" : 100,
+            "unit" : "gram"
+        },
+        {
+            "name" : "kartofler",
+            "amount" : 250,
+            "unit" : "gram"
+        },
+        {
+            "name" : "sødmælk",
+            "amount" : 0.63,
+            "unit" : "dl."
+        },
+        {
+            "name" : "smør",
+            "amount" : 6.25,
+            "unit" : "gram"
+        },
+        {
+            "name" : "persille"
+        }
+    ]
+},{
+    "_id" : ObjectId("570e20f91b23d27af8934bae"),
+    "name" : "brændende kærlighed",
+    "description" : "",
+    "image" : "/assets/burninglove.jpg",
+    "ingredients" : [
+        {
+            "name" : "bacon",
+            "amount" : 150,
+            "unit" : "gram"
+        },
+        {
+            "name" : "løg",
+            "amount" : 100,
+            "unit" : "gram"
+        },
+        {
+            "name" : "kartofler",
+            "amount" : 250,
+            "unit" : "gram"
+        },
+        {
+            "name" : "sødmælk",
+            "amount" : 0.63,
+            "unit" : "dl."
+        },
+        {
+            "name" : "smør",
+            "amount" : 6.25,
+            "unit" : "gram"
+        },
+        {
+            "name" : "persille"
+        }
+    ]
+}];
+      for (var i = 0; i < recipies.length; i++) {
+        console.log(recipies[i]);
+      }
+
+      $(".add-recipie-btn").click(function() {
+        recipieID = $(this).parent().parent().attr('id');
+
+        for (var i = 0; i < recipies.length; i++) {
+          if(recipies[i]._id == recipieID){
+
+            for (var j = 0; j < recipies[i].ingredients.length; j++) {
+              allreadyThere = false;
+
+              for (var k = 0; k < shoppingList.length; k++) {
+                if(shoppingList[k].name.toLowerCase() == recipies[i].ingredients[j].name.toLowerCase()){
+                  allreadyThere = true;
+                }
+              }
+
+              if(!allreadyThere){
+                shoppingList.push({name: recipies[i].ingredients[j].name, checked: false});
+              }
+            }
+
+            redrawList();
+            snackbarContainer.MaterialSnackbar.showSnackbar({message: recipies[i].name+' tilføjet til listen!'});
+          }
         }
+
       });
 
-      $("#finish").click(function(){
-        $.post('/finish');
-      });
+      function redrawList(){
+        $('.shopping-list').html('');
+
+        shoppingList.sort(function(a, b) {
+            return a.checked - b.checked;
+        });
+
+        for (var i = 0; i < shoppingList.length; i++) {
+
+          if(shoppingList[i].checked){
+            done = 'done';
+            check = '<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">done</i></a>';
+          } else{
+            done = '';
+            check = '';
+          }
+
+          $('.shopping-list').append('<li class="mdl-list__item mdl-list__item--one-line">\
+            <span class="mdl-list__item-primary-content shopping-list-item '+done+'">\
+              <span>'+shoppingList[i].name+'</span>\
+            </span>\
+            <span class="mdl-list__item-secondary-content">\
+            '+check+'\
+            </span></li>');
+        }
+      }
+
+      function ObjectId(id) {
+        return id;
+      }
     </script>
   </body>
-</html>
+</html> 

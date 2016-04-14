@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+       url(iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.demo-card-wide.mdl-card {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 300px;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.demo-card-image__filename{
+  color: #fff;
+}
+
+.demo-card-image .mdl-card__actions{
+  height: 52px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mdl-card__title-text{
+  padding: 16px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mdl-card__title{
+  padding: 0;
+}
+
+.mdl-button--fab.mdl-button--colored{
+  background: #56BB4B;
+}
+
+.mdl-button--fab.mdl-button--colored:hover{
+  background: #3c8c38;
+}
+
+.demo-card-image:hover{
+  cursor: pointer;
+}
+
+.cell-scroller{
+  height: 100%;
+  overflow: scroll;
+  padding: 20px;
+  margin: 0;
+  width: 50%;
+}
+
+.cell-scroller .mdl-card__actions .mdl-button{
+  color: #56BB4B;
+}
+
+.shopping-list-item{
+  font-size: 16pt;
+  text-transform: capitalize;
+}
+
+.shopping-list .done{
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.shopping-list li{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shopping-list li a{
+  color: #56BB4B;
+}
+
+h2{
+  font-family: 'HelveticaNeue-CondensedBold';
+  text-transform: uppercase;
+  font-size: 20pt;
+  margin: 0;
+  color: #56BB4B;
+}
