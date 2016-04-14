@@ -1,6 +1,7 @@
 var restify = require('restify');
 var mongojs = require('mongojs');
 var socketio = require('socket.io');
+var fs = require('fs');
 
 
 port = 8080;
@@ -10,14 +11,16 @@ var recipe = [];
 //Creating server using restify
 var server = restify.createServer();
 var io = socketio.listen(server.server);
-// server.use(restify.queryParser());
-// server.use(restify.bodyParser());
 
 var db = mongojs('adaptiveshoppinglist');
 var recipes = db.collection("recipes");
 
 io.sockets.on('connection', function (socket) {
     console.log('New homie is looking..');
+});
+
+server.get('/admin/', function (req, res, next){
+  readFile('admin.html', res);
 });
 
 server.get('/list/', function (req, res, next){
@@ -59,6 +62,17 @@ server.get('/.*/', restify.serveStatic({
 server.listen(port, function () {
   console.log('%s listening at %s', server.name, port);
 });
+
+function readFile(name, res){
+  fs.readFile(name, function (err, html) {
+    if (err) {
+        throw err;
+    }
+    res.writeHeader(200, {"Content-Type": "text/html"});
+    res.write(html);
+    res.end();
+  });
+}
 
 function findRecipe(list){
   recipe = [];
