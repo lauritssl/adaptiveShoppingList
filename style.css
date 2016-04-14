@@ -89,3 +89,24 @@ h2{
   margin: 0;
   color: #56BB4B;
 }
+
+.choosen-recipe{
+  display: inline-block;
+  text-align: center;
+  width: 45%;
+  height: 80px;
+  margin: 10px;
+  min-height: 0 !important;
+}
+
+.choosen-recipe .mdl-card__actions{
+  height: 100%;
+  padding: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#choosen-recipe-list{
+  width: 100%;
+}

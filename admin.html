@@ -55,6 +55,12 @@
               <span class="demo-card-image__filename">Grøntsager</span>
             </div>
           </div>
+          <div class="demo-card-image mdl-card mdl-shadow--2dp" data-category="Fruit" style="background: url('images/fruits.jpg') center / cover;float:left; margin: 10px;width: 45%;">
+            <div class="mdl-card__title mdl-card--expand"></div>
+            <div class="mdl-card__actions">
+              <span class="demo-card-image__filename">Frugt</span>
+            </div>
+          </div>
           <div class="demo-card-image mdl-card mdl-shadow--2dp" data-category="Dry" style="background: url('images/pasta.jpg') center / cover;float:left; margin: 10px;width: 45%;">
             <div class="mdl-card__title mdl-card--expand"></div>
             <div class="mdl-card__actions">
@@ -85,6 +91,12 @@
               <span class="demo-card-image__filename">Sauces</span>
             </div>
           </div>
+          <div class="demo-card-image mdl-card mdl-shadow--2dp" data-category="Oils" style="background: url('images/oil.jpg') center / cover;float:left; margin: 10px;width: 45%;">
+            <div class="mdl-card__title mdl-card--expand"></div>
+            <div class="mdl-card__actions">
+              <span class="demo-card-image__filename">Olier og Dressing</span>
+            </div>
+          </div>
 
         </div>
       </div>
@@ -107,6 +119,8 @@
       var canlist = ['Flåede Tomater', 'Tomatpurre', 'Majs'];
       var saucelist = ['Ketchup', 'Remulade', 'Mayonaise', 'Sennep', 'Money Sauce', 'Rødvins Sauce'];
       var dairylist = ['Mælk', 'Æg', 'Fløde', 'Smør', 'Revet Ost', 'Mozzerella', 'Ost'];
+      var fruitlist = ['Æbler', 'Bananer', 'Pærer', 'Ananas', 'Vindruger'];
+      var oillist = ['Olivenolie', 'Rapsolie', 'Kokusolie', 'Balsamico'];
 
       $(".demo-card-image").click(function() {
         category = $(this).attr('data-category');
@@ -119,6 +133,8 @@
         if(category == 'Cans'){ list = canlist;}
         if(category == 'Sauces'){ list = saucelist;}
         if(category == 'Dairy'){ list = dairylist;}
+        if(category == 'Fruit'){ list = fruitlist;}
+        if(category == 'Oils'){ list = oillist;}
 
         $("#products").html('');
 
@@ -149,8 +165,9 @@
 
       $("#submit").click(function(){
         var product = $("#product").val();
-        $.post('/list/add/'+product);
+        $.post('/list/add/'+product.toLowerCase());
         $("#product").val('').focus();
+        snackbarContainer.MaterialSnackbar.showSnackbar({message: product+' was added to the cart!'});
       });
 
       $('#product').keypress(function (e) {

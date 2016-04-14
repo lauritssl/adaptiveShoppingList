@@ -45,6 +45,7 @@ server.post('/list/add/:product', function (req, res, next){
 
 server.post('/finish/', function (req, res, next){
   list = [];
+  io.emit('finish', true);
   console.log('list is finished');
 });
 
