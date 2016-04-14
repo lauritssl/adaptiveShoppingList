@@ -10,5 +10,15 @@
         });
       });
     </script>
+    <script src="socket.io.js"></script>
+    <script>
+      var socket = io();
+      socket.on('recipe', function(msg){
+        console.log(msg);
+      });
+      socket.on('list', function(msg){
+        // console.log(msg);
+      });
+    </script>
   </body>
 </html>

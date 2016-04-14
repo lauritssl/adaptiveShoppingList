@@ -1,5 +1,6 @@
 var restify = require('restify');
 var mongojs = require('mongojs');
+var socketio = require('socket.io');
 
 
 port = 8080;
@@ -8,11 +9,16 @@ var recipe = [];
 
 //Creating server using restify
 var server = restify.createServer();
+var io = socketio.listen(server.server);
 // server.use(restify.queryParser());
 // server.use(restify.bodyParser());
 
 var db = mongojs('adaptiveshoppinglist');
 var recipes = db.collection("recipes");
+
+io.sockets.on('connection', function (socket) {
+    console.log('New homie is looking..');
+});
 
 server.get('/list/', function (req, res, next){
   // res.send('list', list);
@@ -32,6 +38,7 @@ server.post('/list/add/:product', function (req, res, next){
   product = req.params.product;
   list.push(product);
   console.log(list);
+  io.emit('list', list);
   findRecipe(list);
   res.end();
 });
@@ -82,6 +89,7 @@ function findRecipe(list){
         recipeList.push(mongojs.ObjectId(searchDoc[i]._id));
       }
       console.log(recipeList);
+      k = 0;
       for (var i = 0; i < recipeList.length; i++) {
         recipes.findOne({
           _id: recipeList[i]
@@ -89,6 +97,10 @@ function findRecipe(list){
             if(doc){
               console.log(doc);
               recipe.push(doc);
+              k++;
+              if(k == recipeList.length){
+                io.emit('recipe', recipe);
+              }
             }
         });
 

@@ -17,3 +17,6 @@ db.recipes.aggregate(
 );
 
 db.getCollection('recipes').find({_id : ObjectId("570e20f91b23d27af8934bc7")});
+
+
+db.getCollection('recipes').find({'ingredients.name' : "bacon"}).sort({name: 1}).limit(3)
