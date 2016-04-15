@@ -21,6 +21,9 @@
         </button>
 
         <div class="mdl-layout-spacer"></div>
+        <button id="fetch-btn" class="mdl-button mdl-js-button mdl-button--icon" style="margin-right:20px;">
+          <i class="material-icons">refresh</i>
+        </button>
         <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon" style="margin-right:20px;">
           <i class="material-icons">shopping_cart</i>
         </button>
@@ -108,8 +111,9 @@
       </div>
 
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="socket.io.js"></script>
     <script type="text/javascript">
-
+      var socket = io();
       var snackbarContainer = document.querySelector('#demo-toast-example');
 
       var veglist = ['Kartofler', 'Tomater', 'Agurk', 'Løg'];
@@ -155,8 +159,6 @@
 
           $.post('/list/add/'+product.toLowerCase());
 
-          $("#cart-view").append('<li disabled class="mdl-menu__item">'+product+'</li>');
-
           snackbarContainer.MaterialSnackbar.showSnackbar({message: product+' was added to the cart!'});
 
         });
@@ -177,6 +179,28 @@
           $('#submit').click();
           return false;
         }
+      });
+
+      $('#fetch-btn').click(function() {
+        $.get('/shoppinglist');
+        snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Latest shopping list was fetched'});
+      });
+
+      socket.on('adminshoppinglist', function(data){
+        $("#cart-view").html('');
+        for (var i = 0; i < data.length; i++) {
+          if(data[i].checked == 'true'){
+            $("#cart-view").append('<li disabled class="mdl-menu__item">'+data[i].name+'</li>');
+          } else {
+            $("#cart-view").append('<li class="mdl-menu__item">'+data[i].name+'</li>');
+          }
+        }
+
+        $('.mdl-menu__item').click(function() {
+          product = $(this).text();
+          $.post('/list/add/'+product.toLowerCase());
+          snackbarContainer.MaterialSnackbar.showSnackbar({message: product+' was added to the cart!'});
+        });
       });
 
       $("#finish").click(function(){

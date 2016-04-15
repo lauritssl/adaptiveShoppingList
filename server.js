@@ -15,6 +15,8 @@ var io = socketio.listen(server.server);
 var db = mongojs('adaptiveshoppinglist');
 var recipes = db.collection("recipes");
 
+server.use(restify.bodyParser());
+
 io.sockets.on('connection', function (socket) {
     console.log('New homie is looking..');
 });
@@ -29,6 +31,13 @@ server.get('/list/', function (req, res, next){
   res.end();
 });
 
+server.get('/shoppinglist/', function (req, res, next){
+  // res.send('list', list);
+  io.emit('shoppinglist', true);
+  res.write('Done!');
+  res.end();
+});
+
 server.get('/recipes/', function (req, res, next){
   console.log(recipe);
   res.send(200, recipe);
@@ -36,6 +45,13 @@ server.get('/recipes/', function (req, res, next){
   res.end();
 });
 
+server.post('/shoppinglist', function (req, res, next){
+  console.log('Shopping List send to admin');
+  console.log(req.params.list);
+  io.emit('adminshoppinglist', req.params.list);
+  res.send("test");
+  res.end();
+});
 
 server.post('/list/add/:product', function (req, res, next){
   product = req.params.product;
