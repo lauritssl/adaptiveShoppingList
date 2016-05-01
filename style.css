@@ -97,6 +97,7 @@ h2{
   height: 80px;
   margin: 10px;
   min-height: 0 !important;
+  float: left;
 }
 
 .choosen-recipe .mdl-card__actions{
